@@ -15,7 +15,8 @@ void loop()
 {
   if(Serial.available())
   {
-    Serial.write(analogRead(A3));    //send what has been received
+    Serial.write(analogRead(A3));    //send ADC value over bluetooth
+    Serial.print(analogRead(A3);    //To the terminal
     Serial.write("\n");
   }
 }  
