@@ -11,12 +11,11 @@ void setup() {
     pinMode(A3, INPUT);
 }
  
-int main(void)
+void loop()
 {
-  while (true){
-    if(Serial.available())
-    {
-        Serial.write(analogRead(A3));    //send what has been received
-    }
+  if(Serial.available())
+  {
+    Serial.write(analogRead(A3));    //send what has been received
+    Serial.write("\n");
   }
 }  
