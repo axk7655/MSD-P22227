@@ -14,13 +14,15 @@
 #define DOUT  3
 #define CLK  2
 
+int digitalValue = 0;
+
 HX711 scale;
  
 void setup() {
     Serial.begin(115200);               //initial the Serial
-    pinMode(A3, INPUT);
+    //pinMode(A0, INPUT);                 //for ATmega ADC
 
-    scale.begin(DOUT, CLK);
+    scale.begin(DOUT, CLK);             //for external ADC
     scale.set_scale(cal_factor);
     scale.tare();
 }
@@ -29,10 +31,12 @@ void loop()
 {
   if(Serial.available())
   {
-    Serial.print(scale.get_units(), 1); // Gets from amp and ADC board
-   
-    Serial.write(analogRead(A3));    //send onboard ADC value over bluetooth
-    Serial.print(analogRead(A3));    //To the terminal
+    //Serial.print(scale.get_units(), 1); // Gets from amp and ADC board
+
+    digitalValue = analogRead(A0);
+    //Serial.write(analogRead(A0));    //send onboard ADC value over bluetooth
+    Serial.println(digitalValue);    //To the terminal
     Serial.write("\n");
+    delay(1000);
   }
 }  
