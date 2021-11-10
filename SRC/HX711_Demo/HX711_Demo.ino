@@ -42,12 +42,20 @@ void setup() {
   //scale.tare(); //Assuming there is no weight on the scale at start up, reset the scale to 0
 
   Serial.println("Readings:");
+
+  long int t1 = 0;
+  long int t2 = 0;
 }
 
 void loop() {
   Serial.print("Reading: ");
   //Serial.print(scale.get_units(), 1); //scale.get_units() returns a float
+  long int t1 = millis();
   Serial.print(scale.read(), 1);
+  long int t2 = millis();
   Serial.print(" lbs"); //You can change this to kg but you'll need to refactor the calibration_factor
   Serial.println();
+
+  Serial.print("Time for data: ");
+  Serial.println(t2 - t1);
 }
