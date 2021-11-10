@@ -11,8 +11,8 @@
 
 #define cal_factor 0
 
-#define DOUT  3
-#define CLK  2
+#define DOUT  5
+#define CLK  4
 
 int digitalValue = 0;
 
@@ -29,10 +29,15 @@ void setup() {
  
 void loop()
 {
+  //stuff that does not need the bluetooth to work
+  Serial.print("Reading from ADC board: ");
+  Serial.print(scale.get_units(), 1); //Reads from ADC board. 
+  Serial.println(" ");
+  delay(100);
+
+  //Following only works when the bluetooth works. 
   if(Serial.available())
   {
-    //Serial.print(scale.get_units(), 1); // Gets from amp and ADC board
-
     digitalValue = analogRead(A0);
     //Serial.write(analogRead(A0));    //send onboard ADC value over bluetooth
     Serial.println(digitalValue);    //To the terminal
