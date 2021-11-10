@@ -51,7 +51,8 @@ void loop() {
   Serial.print("Reading: ");
   //Serial.print(scale.get_units(), 1); //scale.get_units() returns a float
   long int t1 = millis();
-  Serial.print(scale.read(), 1);
+  //Serial.print(scale.read(), 1);
+  scale.read();
   long int t2 = millis();
   Serial.print(" lbs"); //You can change this to kg but you'll need to refactor the calibration_factor
   Serial.println();
