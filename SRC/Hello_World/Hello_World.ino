@@ -27,14 +27,9 @@ void setup() {
  
 void loop()
 {
-  int idx = 0;
     if(Serial.available())
     {
         int data = scale.read();
-        //Serial.write(data);    //send over BLE 
-        Serial.println(data); //send over serial
-        //Serial.write(idx);
-        idx = idx + 1;
-        
+        Serial.println(data); //send over serial       
     }
 } 
