@@ -6,8 +6,11 @@
 
 #include "HX711.h"
 
+//---------------------------------------------------------------------------------------------------------
+//Hey MECEs, Change these two only!!!
 #define calibration_factor -35000.0 //This value is obtained using the SparkFun_HX711_Calibration sketch
 #define offset_factor 13850
+//---------------------------------------------------------------------------------------------------------
 
 #define DOUT  5
 #define CLK  4
