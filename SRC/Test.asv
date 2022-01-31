@@ -19,7 +19,6 @@ while true
     time(idx) = clock;
 
     plot(data,time, 'b', 'linewidth', 3);
-    xlabel('Time');
-    ylabel('Force (Nm)');
+    xlabel('Time')
     idx = idx + 1;
 end
