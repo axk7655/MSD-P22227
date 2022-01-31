@@ -15,7 +15,7 @@ idx = 0;
 data = zeros(1,10000);
 time = zeros(1,10000);
 while true
-    data(idx) = readline(arduinoObj);
+    data(idx) = str2num(readline(arduinoObj));
     time(idx) = clock;
 
     plot(data,time, 'b', 'linewidth', 3);
