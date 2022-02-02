@@ -36,7 +36,6 @@ void loop()
   //int data = scale.read();
   //int data = scale.get_value();
   float data = scale.get_units();
-  Serial.print("Number of ADC steps: ");
   Serial.println(data, 4); //send over serial    
   //delay(100);      
 } 
