@@ -69,7 +69,7 @@ void readADC() {
       digitalWrite(pinSCK, HIGH); // inactive going high
     }
       count=count&0xFFFFFF; // mask, if you don't want LSB digits, there all are used
-    Serial.print("Data = ");
+    //Serial.print("Data = ");
     Serial.println(count);
     // get the 8 status bits
     for(i=0;i<8;i++)
@@ -79,8 +79,9 @@ void readADC() {
       if(digitalRead(pinDAT))
         statusBits++;    
       digitalWrite(pinSCK, HIGH);
-    }       
-
+    }     
+    //Serial.print("Status bits = ");  
+    //Serial.println(statusBits);
     numTry += 1;              // count number of attempts
     if (numTry >= 10) {       // if ten, then
       statusBits = B01000001; // force a return, with a number
