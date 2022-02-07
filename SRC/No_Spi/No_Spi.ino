@@ -1,9 +1,9 @@
-const int pinSCK = 9;  // clock digital out
-const int pinDAT = 8;  // ready/data digital input
+const int pinSCK = 5;  // clock digital out
+const int pinDAT = 4;  // ready/data digital input
 //const int pinPwrDn = 10; // power down/reset digital out
 
 long count; // ADC result
-const unsigned long waitMs = 600000; // delay btwn reads
+const unsigned long waitMs = 600; // delay btwn reads
 unsigned long nowMs;
 unsigned long prevMs=0;
 
@@ -13,7 +13,7 @@ float wtSum=0.0;
 float numReads=0.0;
 
 void setup() { 
-  Serial.begin(250000);
+  Serial.begin(9600);
   Serial.println(F("ADC 24-bit test; zero diff 524288; stat B01000001")); 
 
   //*** ADC setup
@@ -26,11 +26,14 @@ void setup() {
 void loop() {
  
   nowMs = millis();
+  Serial.print("Current MS : ");
+  Serial.println(nowMs);
 //  chkButtons();     // check LCD buttons and change backlight or show free RAM
 
+  //Serial.println("In Loop");
   if((nowMs - prevMs > waitMs)) {
     prevMs = nowMs;
-
+    //Serial.println("In time check");
 
     readADC();      // get ADC count
     doCalcs();      // do max, min, sum (for avg)
@@ -45,15 +48,17 @@ void readADC() {
   count = 0;  
   numReads += 1;       // number of calls to read ADC (used to calc averages)
 
+
   while(statusBits ^ B01001101) { 
     // if statusBits doesn't match that pattern
     // then the ADC has reported an error in conversion or in the read
     // and XOR will return non-zero (i.e., true), and loop will continue.
     // If statusBits matches that pattern, 
     // then XOR will return zero (false) and loop will end.
+    //Serial.println("Passed status check, waiting on data to be ready");
 
     while(digitalRead(pinDAT));  // goes low when data is ready
-
+    //Serial.println("Data reading");
     // then get 24 bits, MSB first
     for(i=0;i<24;i++)
     { 
@@ -64,7 +69,8 @@ void readADC() {
       digitalWrite(pinSCK, HIGH); // inactive going high
     }
       count=count&0xFFFFFF; // mask, if you don't want LSB digits, there all are used
-
+    Serial.print("Data = ");
+    Serial.println(count);
     // get the 8 status bits
     for(i=0;i<8;i++)
     { 
@@ -80,6 +86,7 @@ void readADC() {
       statusBits = B01000001; // force a return, with a number
     }
   }
+  Serial.println("Failed check");
 }
 
 void doCalcs() {
