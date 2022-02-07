@@ -8,7 +8,7 @@
 
 void setup (void) {
 
-  Serial.begin(250000);
+  Serial.begin(9600);
   SPI.begin();
   SPI.setClockDivider(SPI_CLOCK_DIV4);  // 1 MHz
   SPI.setBitOrder(MSBFIRST); 
