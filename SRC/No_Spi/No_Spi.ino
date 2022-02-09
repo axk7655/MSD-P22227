@@ -2,6 +2,12 @@ const int pinSCK = 5;  // clock digital out
 const int pinDAT = 4;  // ready/data digital input
 //const int pinPwrDn = 10; // power down/reset digital out
 
+
+//-------------------Calibration Numbers----------------
+const long offSet = 8802500;
+const float scale = 0.0004;
+//-------------------Calibration Numbers----------------
+
 long count; // ADC result
 const unsigned long waitMs = 600; // delay btwn reads
 unsigned long nowMs;
@@ -14,7 +20,7 @@ float numReads=0.0;
 
 void setup() { 
   Serial.begin(9600);
-  Serial.println(F("ADC 24-bit test; zero diff 524288; stat B01000001")); 
+  //Serial.println(F("ADC 24-bit test; zero diff 524288; stat B01000001")); 
 
   //*** ADC setup
   pinMode(pinDAT,INPUT_PULLUP); // pull high (when shut down, ADC tri-states pin)
@@ -24,10 +30,11 @@ void setup() {
 }
 
 void loop() {
- 
+  long ADCresult = 0;
+  float CONVresult = 0;
   nowMs = millis();
-  Serial.print("Current MS : ");
-  Serial.println(nowMs);
+  //Serial.print("Current MS : ");
+  //Serial.println(nowMs);
 //  chkButtons();     // check LCD buttons and change backlight or show free RAM
 
   //Serial.println("In Loop");
@@ -36,8 +43,8 @@ void loop() {
     //Serial.println("In time check");
 
     readADC();      // get ADC count
-    doCalcs();      // do max, min, sum (for avg)
-    PrintSerial();  // show on computer, if connected
+    //CONVresult = doCalcs(ADCresult);      // do max, min, sum (for avg)
+    //PrintSerial();  // show on computer, if connected
   }
 }
 
@@ -47,7 +54,7 @@ void readADC() {
   byte numTry = 0;     // number of attempts to read ADC
   count = 0;  
   numReads += 1;       // number of calls to read ADC (used to calc averages)
-
+  long result = 0;
 
   while(statusBits ^ B01001101) { 
     // if statusBits doesn't match that pattern
@@ -69,8 +76,9 @@ void readADC() {
       digitalWrite(pinSCK, HIGH); // inactive going high
     }
       count=count&0xFFFFFF; // mask, if you don't want LSB digits, there all are used
+      doCalcs(count);
     //Serial.print("Data = ");
-    Serial.println(count);
+    //Serial.println(count);
     // get the 8 status bits
     for(i=0;i<8;i++)
     { 
@@ -87,25 +95,26 @@ void readADC() {
       statusBits = B01000001; // force a return, with a number
     }
   }
-  Serial.println("Failed check");
+  //.println("Failed check");
 }
 
-void doCalcs() {
+float doCalcs(long ADCresult) {
 
-  countF = (count - 8388608); 
-  countF = countF * 0.000000596046448;
-   wtSum += countF;
-   if(numReads>3){numReads=1;wtSum=countF;}
+  countF = (ADCresult - offSet); 
+  countF = countF * scale;
+   //wtSum += countF;
+   //if(numReads>3){numReads=1;wtSum=countF;}
+   PrintSerial(countF);
 }
 
-void PrintSerial() {
-
+void PrintSerial(float toPrint) {
+   Serial.println(toPrint);
   // print to computer, if connected
-  Serial.println(F("**********"));
-  Serial.print("i=");
-  Serial.println(numReads);     
-  Serial.print("count=");
-  Serial.println(countF,3);
-  Serial.print("sum=");
-  Serial.println(wtSum/numReads);      
+  //Serial.println(F("**********"));
+  //Serial.print("i=");
+  //Serial.println(numReads);     
+  //Serial.print("count=");
+  //Serial.println(countF,3);
+  //Serial.print("sum=");
+  //Serial.println(wtSum/numReads);      
 }
