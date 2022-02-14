@@ -3,16 +3,17 @@
 %Description: What should be the main file to run and get plots from the device.   
 %Author: Andy Keats
 
-MaxBufferSamp = 195;
-AvgSampSize = 25;
+MaxBufferSamp = 995;
+AvgSampSize = 75;
 
 Torque = zeros(1,10);
 Time = zeros(1,10000);
 AvgData = zeros(1,MaxBufferSamp); 
 
+
 try
     ListOfPorts = serialportlist("available");
-    arduinoObj = serialport("COM3",9600);
+    arduinoObj = serialport("COM4",9600);
     configureTerminator(arduinoObj,"CR/LF");
     flush(arduinoObj);
 catch
@@ -30,6 +31,8 @@ while true
     
     subplot(2,1,1);
     plot(Torque, '-b');
+    ylabel("ADC Value");
+    xlabel("Samples");
     if (length(Torque) > MaxBufferSamp)
         %at max buffer size, shift data
         Torque = Torque(2:end);
