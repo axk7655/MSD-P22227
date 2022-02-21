@@ -9,6 +9,14 @@ AvgSampSize = 5;
 Torque = zeros(1,1);
 Time = datetime('now');
 AvgData = zeros(1,MaxBufferSamp); 
+subplot(2,1,1);
+plot(Time, Torque, '-b');
+ylabel("ADC Value");
+xlabel("Time");
+subplot(2,1,2);
+plot(Time, AvgData, 'r');
+ylabel("ADC Value");
+xlabel("Time");
 
 
 try
