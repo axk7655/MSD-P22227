@@ -3,7 +3,7 @@
 %Description: What should be the main file to run and get plots from the device.   
 %Author: Andy Keats
 
-MaxBufferSamp = 195;
+MaxBufferSamp = 295;
 AvgSampSize = 5;
 
 Torque = zeros(1,1);
@@ -36,7 +36,7 @@ while true
     if (length(Torque) > MaxBufferSamp)
         %max buffer size so shift data
         Torque = Torque(2:end);
-        Time = Time(2:end);
+        Time = Time
         idx = length(Torque);
         AvgData(idx) = mean(Torque(MaxBufferSamp - AvgSampSize:end));
         subplot(2,1,2);
