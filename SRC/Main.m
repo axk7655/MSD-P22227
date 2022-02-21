@@ -3,11 +3,11 @@
 %Description: What should be the main file to run and get plots from the device.   
 %Author: Andy Keats
 
-MaxBufferSamp = 995;
+MaxBufferSamp = 295;
 AvgSampSize = 75;
 
 Torque = zeros(1,10);
-Time = zeros(1,10000);
+Time = zeros(1,MaxBufferSamp);
 AvgData = zeros(1,MaxBufferSamp); 
 
 
