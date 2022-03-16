@@ -1,10 +1,10 @@
-const int pinSCK = 5;  // clock digital out
-const int pinDAT = 4;  // ready/data digital input
+const int pinSCK = 4;  // clock digital out
+const int pinDAT = 5;  // ready/data digital input
 //const int pinPwrDn = 10; // power down/reset digital out
 
 
 //-------------------Calibration Numbers----------------
-const long offSet = 8802500;
+long offSet = 8802500;
 const float scale = 0.0004;
 //-------------------Calibration Numbers----------------
 
@@ -15,8 +15,11 @@ unsigned long prevMs=0;
 
 // for weight statistics
 float countF;
-float wtSum=0.0;
-float numReads=0.0;
+float wtSum = 0.0;
+float numReads = 0.0;
+
+//control flag
+int TARE = 0;
 
 void setup() { 
   Serial.begin(9600);
@@ -76,6 +79,11 @@ void readADC() {
       digitalWrite(pinSCK, HIGH); // inactive going high
     }
       count=count&0xFFFFFF; // mask, if you don't want LSB digits, there all are used
+      if (TARE == 0)
+      {
+        offSet = count;
+        TARE == 1;
+      }
       doCalcs(count);
     //Serial.print("Data = ");
     //Serial.println(count);
@@ -99,12 +107,12 @@ void readADC() {
 }
 
 float doCalcs(long ADCresult) {
-
+  //Applies offset and scaling factor
   countF = (ADCresult - offSet); 
   countF = countF * scale;
    //wtSum += countF;
    //if(numReads>3){numReads=1;wtSum=countF;}
-   PrintSerial(countF);
+   PrintSerial(countF); //prints over bluetooth
 }
 
 void PrintSerial(float toPrint) {
