@@ -35,7 +35,7 @@ void setup() {
 void loop() {
   long ADCresult = 0;
   float CONVresult = 0;
-  delay(10000);
+  delay(5000);
   nowMs = millis();
   //Serial.print("Current MS : ");
   //Serial.println(nowMs);
