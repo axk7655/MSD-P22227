@@ -19,7 +19,7 @@ float wtSum = 0.0;
 float numReads = 0.0;
 
 //control flag
-int TARE = 0;
+//int TARE = 0;
 
 void setup() { 
   Serial.begin(9600);
@@ -35,6 +35,7 @@ void setup() {
 void loop() {
   long ADCresult = 0;
   float CONVresult = 0;
+  delay(10000);
   nowMs = millis();
   //Serial.print("Current MS : ");
   //Serial.println(nowMs);
@@ -58,6 +59,7 @@ void readADC() {
   count = 0;  
   numReads += 1;       // number of calls to read ADC (used to calc averages)
   long result = 0;
+  int TARE = 0;
 
   while(statusBits ^ B01001101) { 
     // if statusBits doesn't match that pattern
@@ -82,7 +84,7 @@ void readADC() {
       if (TARE == 0)
       {
         offSet = count;
-        TARE == 1;
+        TARE = 1;
       }
       doCalcs(count);
     //Serial.print("Data = ");
