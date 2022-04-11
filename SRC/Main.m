@@ -21,7 +21,7 @@ xlabel("Time");
 
 try
     ListOfPorts = serialportlist("available");
-    arduinoObj = serialport("COM4",9600);
+    arduinoObj = serialport("COM3",9600);
     configureTerminator(arduinoObj,"CR/LF");
     flush(arduinoObj);
 catch
