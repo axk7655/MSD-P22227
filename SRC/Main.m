@@ -13,10 +13,10 @@ subplot(2,1,1);
 plot(Time, Torque, '-b');
 ylabel("ADC Value");
 xlabel("Time");
-subplot(2,1,2);
-plot(Time, AvgData, 'r');
-ylabel("ADC Value");
-xlabel("Time");
+%subplot(2,1,2);
+%plot(Time, AvgData, 'r');
+%ylabel("ADC Value");
+%xlabel("Time");
 
 
 try
@@ -39,17 +39,16 @@ while true
     
     subplot(2,1,1);
     plot(Time, Torque, '-b');
-    ylabel("ADC Value");
-    xlabel("Samples");
+%    ylabel("ADC Value");
+%    xlabel("Samples");
     if (length(Torque) > MaxBufferSamp)
         %max buffer size so shift data
         Torque = Torque(2:end);
         Time = Time(2:end);
         idx = length(Torque);
-        AvgData(idx) = mean(Torque(MaxBufferSamp - AvgSampSize:end));
-        subplot(2,1,2);
-        plot(Time, AvgData, 'r');
-        AvgData = AvgData(2:end);
+%        AvgData(idx) = mean(Torque(MaxBufferSamp - AvgSampSize:end));
+%        subplot(2,1,2);
+%        plot(Time, AvgData, 'r');
+%        AvgData = AvgData(2:end);
     end
-        
 end
