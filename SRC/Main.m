@@ -9,7 +9,7 @@ AvgSampSize = 125;
 Torque = zeros(1,1);
 Time = datetime('now');
 AvgData = zeros(1,MaxBufferSamp); 
-subplot(2,1,1);
+%subplot(2,1,1);
 plot(Time, Torque, '-b');
 ylabel("ADC Value");
 xlabel("Time");
@@ -33,18 +33,19 @@ while true
     data = readline(arduinoObj);
 
     Torque(idx) = data;
-    Time(idx) = datetime('now');
+    %Time(idx) = datetime('now');
     idx = idx + 1;
     disp(arduinoObj.NumBytesAvailable)
     
-    subplot(2,1,1);
-    plot(Time, Torque, '-b');
+    %subplot(2,1,1);
+    %plot(Time, Torque, '-b');
+    plot(Torque, '-b');
 %    ylabel("ADC Value");
 %    xlabel("Samples");
     if (length(Torque) > MaxBufferSamp)
         %max buffer size so shift data
         Torque = Torque(2:end);
-        Time = Time(2:end);
+        %Time = Time(2:end);
         idx = length(Torque);
 %        AvgData(idx) = mean(Torque(MaxBufferSamp - AvgSampSize:end));
 %        subplot(2,1,2);
